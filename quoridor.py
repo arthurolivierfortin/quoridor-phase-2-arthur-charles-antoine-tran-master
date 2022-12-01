@@ -75,12 +75,12 @@ class Quoridor:
         except TypeError:
             raise QuoridorError("L'argument 'joueurs' n'est pas itérable.")
         
-        if type(joueurs) == list:
+        if type(joueurs) == tuple:
             if len(joueurs) > 2:
                 raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
             joueurs = [{f"nom: {joueurs[0]}, murs: 10, pos: [5, 1]"},
                        {f"nom: {joueurs[1]}, murs: 10, pos: [5, 9]"},]
-        if type(joueurs) == dict:
+        if type(joueurs) == list:
             if len(joueurs) > 2:
                 raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
             
@@ -90,14 +90,15 @@ class Quoridor:
             elif joueurs[1]["murs"] < 0 or joueurs[1]["murs"] > 10:
                 raise QuoridorError("Le nombre de murs qu'un joueur peut placer est plus grand que 10, ou négatif.")
 
-            elif joueurs[0]["pos"] != [5, 1] or joueurs[0]["pos"] != [5, 9]:
+            elif joueurs[0]["pos"] != [5, 1] and joueurs[0]["pos"] != [5, 9] and murs == None:
                 raise QuoridorError("La position d'un joueur est invalide.")
 
-            elif joueurs[1]["pos"] != [5, 1] or joueurs[1]["pos"] != [5, 9]:
+            elif joueurs[1]["pos"] != [5, 1] and joueurs[1]["pos"] != [5, 9] and murs == None:
                 raise QuoridorError("La position d'un joueur est invalide.")
         
         if murs == None:
             murs = {"horizontaux": [], "verticaux": [],}
+
         if murs != None:
             if type(murs) != dict:
                 raise QuoridorError("L'argument 'murs' n'est pas un dictionnaire lorsque présent.")
@@ -120,7 +121,7 @@ class Quoridor:
                     raise QuoridorError("La position d'un mur est invalide.")
         
         état = {"joueurs": joueurs, "murs": murs}
-        print(état)
+        return(état)
     
     def formater_légende(self):
         """Formater la représentation graphique de la légende.
