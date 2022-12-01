@@ -66,7 +66,9 @@ class Quoridor:
             QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.
             QuoridorError: La position d'un mur est invalide.
         """
-        
+        print(joueurs)
+        print((joueurs[0]["murs"]))
+        print(f"{murs} \n\n\n\n\n")
         try:
             joueurs[0]
         except TypeError:
@@ -75,7 +77,8 @@ class Quoridor:
         if type(joueurs) == list:
             if len(joueurs) > 2:
                 raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
-        
+            joueurs = [{f"nom: {joueurs[0]}, murs: 10, pos: [5, 1]"},
+                       {f"nom: {joueurs[1]}, murs: 10, pos: [5, 9]"},]
         if type(joueurs) == dict:
             if len(joueurs) > 2:
                 raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
@@ -86,11 +89,38 @@ class Quoridor:
             elif joueurs[1]["murs"] < 0 or joueurs[1]["murs"] > 10:
                 raise QuoridorError("Le nombre de murs qu'un joueur peut placer est plus grand que 10, ou négatif.")
 
-            elif joueurs[0]["pos"] != [5, 1] or joueurs[0]["pos"] != [5, 0]:
+            elif joueurs[0]["pos"] != [5, 1] or joueurs[0]["pos"] != [5, 9]:
                 raise QuoridorError("La position d'un joueur est invalide.")
 
-            elif joueurs[0]["pos"] != [5, 1] or joueurs[0]["pos"] != [5, 0]:
+            elif joueurs[1]["pos"] != [5, 1] or joueurs[1]["pos"] != [5, 9]:
                 raise QuoridorError("La position d'un joueur est invalide.")
+        
+        if murs == None:
+            murs = {"horizontaux": [], "verticaux": [],}
+        if murs != None:
+            if type(murs) != dict:
+                raise QuoridorError("L'argument 'murs' n'est pas un dictionnaire lorsque présent.")
+
+            if len(murs["horizontaux"]) + len(murs["horizontaux"]) + (joueurs[0]["murs"]) + (joueurs[1]["murs"]) != 20:
+                raise QuoridorError("QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.")
+    
+            for i in murs["horizontaux"]:
+                if (1 <= i[0] <= 8) == False:
+                    raise QuoridorError("La position d'un mur est invalide.")
+            
+                elif (2 <= i[1] <= 9) == False:
+                    raise QuoridorError("La position d'un mur est invalide.")
+        
+            for i in murs["verticaux"]:
+                if (2 <= i[0] <= 9) == False:
+                    raise QuoridorError("La position d'un mur est invalide.")
+            
+                elif (1 <= i[1] <= 8) == False:
+                    raise QuoridorError("La position d'un mur est invalide.")
+        
+        état = {"joueurs": joueurs, "murs": murs}
+        print(état)
+    
     def formater_légende(self):
         """Formater la représentation graphique de la légende.
 
