@@ -66,12 +66,31 @@ class Quoridor:
             QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.
             QuoridorError: La position d'un mur est invalide.
         """
+        
         try:
             joueurs[0]
         except TypeError:
             raise QuoridorError("L'argument 'joueurs' n'est pas itérable.")
-        if len(joueurs) > 2:
-            raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
+        
+        if type(joueurs) == list:
+            if len(joueurs) > 2:
+                raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
+        
+        if type(joueurs) == dict:
+            if len(joueurs) > 2:
+                raise QuoridorError("L'itérable de joueurs en contient un nombre différent de deux.")
+            
+            elif joueurs[0]["murs"] < 0 or joueurs[0]["murs"] > 10:
+                raise QuoridorError("Le nombre de murs qu'un joueur peut placer est plus grand que 10, ou négatif.")
+            
+            elif joueurs[1]["murs"] < 0 or joueurs[1]["murs"] > 10:
+                raise QuoridorError("Le nombre de murs qu'un joueur peut placer est plus grand que 10, ou négatif.")
+
+            elif joueurs[0]["pos"] != [5, 1] or joueurs[0]["pos"] != [5, 0]:
+                raise QuoridorError("La position d'un joueur est invalide.")
+
+            elif joueurs[0]["pos"] != [5, 1] or joueurs[0]["pos"] != [5, 0]:
+                raise QuoridorError("La position d'un joueur est invalide.")
     def formater_légende(self):
         """Formater la représentation graphique de la légende.
 
