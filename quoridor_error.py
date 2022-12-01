@@ -1,0 +1,3 @@
+class QuoridorError(Exception):
+    pass
+
