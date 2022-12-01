@@ -66,6 +66,7 @@ class Quoridor:
             QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.
             QuoridorError: La position d'un mur est invalide.
         """
+        print(type(joueurs))
         print(joueurs)
         print((joueurs[0]["murs"]))
         print(f"{murs} \n\n\n\n\n")
@@ -101,7 +102,7 @@ class Quoridor:
             if type(murs) != dict:
                 raise QuoridorError("L'argument 'murs' n'est pas un dictionnaire lorsque présent.")
 
-            if len(murs["horizontaux"]) + len(murs["horizontaux"]) + (joueurs[0]["murs"]) + (joueurs[1]["murs"]) != 20:
+            if len(murs["horizontaux"]) + len(murs["horizontaux"]) + (joueurs[0]['murs']) + (joueurs[1]['murs']) != 20:
                 raise QuoridorError("QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.")
     
             for i in murs["horizontaux"]:
