@@ -66,10 +66,7 @@ class Quoridor:
             QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.
             QuoridorError: La position d'un mur est invalide.
         """
-        print(type(joueurs))
-        print(joueurs)
-        print((joueurs[0]["murs"]))
-        print(f"{murs} \n\n\n\n\n")
+        
         try:
             joueurs[0]
         except TypeError:
@@ -121,7 +118,8 @@ class Quoridor:
                     raise QuoridorError("La position d'un mur est invalide.")
         
         état = {"joueurs": joueurs, "murs": murs}
-        return(état)
+        self.état = état
+        return self.état
     
     def formater_légende(self):
         """Formater la représentation graphique de la légende.
@@ -129,15 +127,108 @@ class Quoridor:
         Returns:
             str: Chaîne de caractères représentant la légende.
         """
-        pass
+        
+        x = self.état["joueurs"]
+        nb_murs_joueur1 = x[0]['murs']
+        nb_murs_joueur2 = x[1]['murs']
+        nom_joueur1 = x[0]['nom']
+        nom_joueur2 = x[1]['nom']
+        différence_espace = len(nom_joueur1) - len(nom_joueur2)
+        espace_ajoutee_joueur2 = 0
+        espace_ajoutee_joueur1 = 0
+        if différence_espace > 0:
+            espace_ajoutee_joueur2 = 0
+            espace_ajoutee_joueur2 = ((' '*(différence_espace)))
+            murs_joueur1 = (nb_murs_joueur1*'|')
+            murs_joueur2 = (nb_murs_joueur2*'|')
+            legende = ("Légende:\n"   f"   1={nom_joueur1}, murs={murs_joueur1}\n"   f"   2={nom_joueur2}, {espace_ajoutee_joueur2}murs={murs_joueur2}\n")
+            self.legende = legende
+            return self.legende
+        if différence_espace < 0:
+            espace_ajoutee_joueur1 = 0
+            espace_ajoutee_joueur1 = ((' '*(-1*(différence_espace))))
+            murs_joueur1 = (nb_murs_joueur1*'|')
+            murs_joueur2 = (nb_murs_joueur2*'|')
+            legende = ("Légende:\n"   f"   1={nom_joueur1}, {espace_ajoutee_joueur1}murs={murs_joueur1}\n"   f"   2={nom_joueur2}, murs={murs_joueur2}\n")
+            self.legende = legende
+            return self.legende
+        
+        murs_joueur1 = nb_murs_joueur1*'|'
+        murs_automate = nb_murs_joueur2*'|'
+        legende = ("Légende:\n"   f"   1={nom_joueur1}, murs={murs_joueur1}\n"   f"   2={nom_joueur2}, murs={murs_joueur2}\n")
+        return legende
 
+    
+    
     def formater_damier(self):
         """Formater la représentation graphique du damier.
 
         Returns:
             str: Chaîne de caractères représentant le damier.
         """
-        pass
+        damier_vide = (
+            "   -----------------------------------\n"
+            "9 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "8 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "7 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "6 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "5 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "4 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "3 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "2 | .   .   .   .   .   .   .   .   . |\n"
+            "  |                                   |\n"
+            "1 | .   .   .   .   .   .   .   .   . |\n"
+            "--|-----------------------------------\n"
+            "  | 1   2   3   4   5   6   7   8   9\n"
+        )
+        
+        damier = damier_vide
+        murs_verticaux = self.état["murs"]["verticaux"]
+        murs_horizontaux = self.état["murs"]["horizontaux"]
+        positionnement_joueur1 = self.état["joueurs"][0]['pos']
+        positionnement_joueur2 = self.état["joueurs"][1]['pos']
+        for i in murs_verticaux:
+            x = damier.find(str(i[1]))
+            damier = list(damier)
+            y = (4+(4*((i[0])-1))-2)
+            damier[x+y] = ('|')
+            damier[x+y-40] = ('|')
+            damier[x+y-80] = ('|')
+            z = ''.join(damier)
+            damier = (z)
+        for i in murs_horizontaux:
+            x = damier.find(str(i[1]))
+            damier = list(damier)
+            y = (+40+4+(4*((i[0])))-5)
+            damier[y+x] = ('-')
+            damier[y+x+1] = ('-')
+            damier[y+x+2] = ('-')
+            damier[y+x+3] = ('-')
+            damier[y+x+4] = ('-')
+            damier[y+x+5] = ('-')
+            damier[y+x+6] = ('-')
+            z = ''.join(damier)
+            damier = (z)
+        x = damier.find(str(positionnement_joueur1[1]))
+        damier = list(damier)
+        y = (4+(4*((positionnement_joueur1[0])-1)))
+        damier[y+x] = ('1')
+        z = ''.join(damier)
+        damier = (z)
+        x = damier.find(str(positionnement_joueur2[1]))
+        damier = list(damier)
+        y = (4+(4*((positionnement_joueur2[0])-1)))
+        damier[y+x] = ('2')
+        z = ''.join(damier)
+        damier = (z)
+        return damier
 
     def __str__(self):
         """Représentation en art ascii de l'état actuel de la partie.
@@ -147,7 +238,10 @@ class Quoridor:
         Returns:
             str: La chaîne de caractères de la représentation.
         """
-        pass
+        damier = self.formater_damier()
+        legende = self.formater_légende()
+        return(f"{legende}{damier}")
+        
 
     def état_courant(self):
         """Produire l'état actuel du jeu.
