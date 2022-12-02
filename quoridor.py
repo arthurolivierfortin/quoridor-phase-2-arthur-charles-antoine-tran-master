@@ -66,7 +66,6 @@ class Quoridor:
             QuoridorError: Le total des murs placés et plaçables n'est pas égal à 20.
             QuoridorError: La position d'un mur est invalide.
         """
-        ## j'essaye de push
         try:
             joueurs[0]
         except TypeError:
